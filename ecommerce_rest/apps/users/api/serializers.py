@@ -5,4 +5,31 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        #exclude
+        # exclude
+
+
+# Serializados que no está basado en un modelo
+class TestUserSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length = 200)
+    email = serializers.EmailField()
+
+    # Custom validation
+    def validate_name(self, value):
+        if 'monaxina' in value:
+            raise serializers.ValidationError('Error, el usuario no puede llamarse mona xina.')
+        return value
+
+    def validate_email(self, value):
+        if value == '':
+            raise serializers.ValidationError('Error, debe indicar un correo electrónico.')
+        if self.validate_name(self.context['name']) in value:
+            raise serializers.ValidationError('El email no puede contener el nombre.')
+        return value
+
+    def validate(self, data):
+        '''
+        if data['name'] in data['email']:
+            raise serializers.ValidationError('El mail no puede contener el nombre.')
+        '''
+        print('Validación general')
+        return data
