@@ -32,4 +32,8 @@ class TestUserSerializer(serializers.Serializer):
             raise serializers.ValidationError('El mail no puede contener el nombre.')
         '''
         print('Validación general')
-        return data
+        return 
+        
+    def create(self,validated_data):
+        print(validated_data)
+        return User(**validated_data)
