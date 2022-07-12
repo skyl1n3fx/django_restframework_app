@@ -16,20 +16,6 @@ def user_api_view(request):
         # Queryset
         users = User.objects.all()
         users_serializer = UserSerializer(users, many = True).data
-
-        test_data = {
-            'name' : 'jorge',
-            'email' : 'uwu@gmail.com'
-        }
-
-        # Si entregamos el parámetro extra contex, podemos hacer mejores validaciones.
-        test_user = TestUserSerializer(data = test_data, context = test_data)
-
-        if test_user.is_valid():
-            print('Pasó validaciones')
-        else:
-            print(test_user.errors)
-
         return Response(users_serializer, status = status.HTTP_200_OK)
     # Create
     elif request.method == 'POST':
@@ -56,7 +42,7 @@ def user_detail_view(request,pk = None):
             return Response(user_serializer.data, status = status.HTTP_200_OK)
         # Update 
         elif request.method == 'PUT':
-            user_serializer = UserSerializer(user, data = request.data)
+            user_serializer = TestUserSerializer(user, data = request.data, context = request.data)
             if user_serializer.is_valid():
                 user_serializer.save()
                 return Response(user_serializer.data, status = status.HTTP_200_OK)

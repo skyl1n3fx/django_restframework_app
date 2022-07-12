@@ -32,8 +32,19 @@ class TestUserSerializer(serializers.Serializer):
             raise serializers.ValidationError('El mail no puede contener el nombre.')
         '''
         print('Validación general')
-        return 
+        return data
         
     def create(self,validated_data):
         print(validated_data)
-        return User(**validated_data)
+        #return User(**validated_data)
+        return User.objects.create(**validated_data)
+
+    def update(self,instance,validated_data):
+        instance.name = validated_data.get('name',instance.name)
+        instance.email = validated_data.get('email',instance.email)
+        instance.save()
+        return instance
+
+# Si queremos hacer validaciones especificas por campo en caso de Create or Update.
+# Podemos hacerlo en el método.
+# Podemos crear 2 serializers para uno por caso.
