@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     # Sobreescribimos al atributo Image, para que acepte codificación base 64
     image = Base64ImageField(required=False)
+    password = serializers.CharField(min_length=3, required=False)
 
     class Meta:
         model = User
@@ -23,13 +24,24 @@ class UserSerializer(serializers.ModelSerializer):
     
     def update(self,instance,validated_data):
         updated_user = super().update(instance, validated_data)
-        updated_user.set_password(validated_data['password'])
-        updated_user.save()
+        try:
+            # Encripta la contraseña sólo si se actualiza
+            updated_user.set_password(validated_data['password'])
+        except Exception as ex:
+            pass
+        finally:
+            updated_user.save()
+        
         return updated_user
 
 # Creamos un serializer para sólo lectura
 class UserListSerializer(serializers.ModelSerializer):
-    
+
+    # Mostrar una relación foránea como JSON 
+    # tipo = TipoSerializer(read_only = True)
+    # Le indicamos los tipos de usuarios aceptados
+    # tipo_id = serializers.PrimaryKeyRelatedField(queryset=Tipo.objects.all(), source="tipo")
+
     class Meta:
         model = User
 
@@ -59,6 +71,10 @@ class TestUserSerializer(serializers.Serializer):
         return value
 
     def validate_email(self, value):
+        existe = User.objects.filter(email=value).exists()
+
+        if existe:
+            raise serializers.ValidationError('Error el email ya se encuentra registrado!')
         if value == '':
             raise serializers.ValidationError('Error, debe indicar un correo electrónico.')
         if self.validate_name(self.context['name']) in value:
