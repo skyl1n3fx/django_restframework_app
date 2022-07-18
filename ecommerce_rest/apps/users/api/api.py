@@ -14,10 +14,20 @@ from rest_framework import status
 def user_api_view(request):
     # List 
     if request.method == 'GET':
+
+        # Podemos recibir parametros del request, para aplicar filtros
+        usuario = request.GET.get('usuario')
+
+        if usuario:
+            users = User.objects.filter(username__contains=usuario).values('id','username','email','image','password')
+            users_serializer = UserListSerializer(users, many = True).data    
+            return Response(users_serializer, status = status.HTTP_200_OK)
+        
         # Queryset
         # Ajustamos la consulta para sólo obtener la data que quiero mostrar.
         users = User.objects.all().values('id','username','email','image','password')
         users_serializer = UserListSerializer(users, many = True).data
+        
         return Response(users_serializer, status = status.HTTP_200_OK)
     # Create
     elif request.method == 'POST':
