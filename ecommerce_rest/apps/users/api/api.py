@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from apps.users.models import User
-from apps.users.api.serializers import UserSerializer, TestUserSerializer
+from apps.users.api.serializers import UserSerializer, TestUserSerializer, UserListSerializer
 
 # Con decoradores
 from rest_framework.decorators import api_view
@@ -16,7 +16,7 @@ def user_api_view(request):
         # Queryset
         # Ajustamos la consulta para sólo obtener la data que quiero mostrar.
         users = User.objects.all().values('id','username','email','image','password')
-        users_serializer = UserSerializer(users, many = True).data
+        users_serializer = UserListSerializer(users, many = True).data
         return Response(users_serializer, status = status.HTTP_200_OK)
     # Create
     elif request.method == 'POST':

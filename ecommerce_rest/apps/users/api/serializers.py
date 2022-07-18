@@ -6,7 +6,26 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
         # exclude
+
+    def create(self,validated_data):
+        # Encriptamos la contraseña
+        user = User(**validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
     
+    def update(self,instance,validated_data):
+        updated_user = super().update(instance, validated_data)
+        updated_user.set_password(validated_data['password'])
+        updated_user.save()
+        return updated_user
+
+# Creamos un serializer para sólo lectura
+class UserListSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+
     def to_representation(self,instance):
         # print(instance)
         # super().to_representation(instance) llama a cada uno de los valores (fields)
@@ -17,6 +36,8 @@ class UserSerializer(serializers.ModelSerializer):
             'foto' : instance['image'],
             'contrasenia' : instance['password'],
         }
+
+
 
 
 # Serializados que no está basado en un modelo
