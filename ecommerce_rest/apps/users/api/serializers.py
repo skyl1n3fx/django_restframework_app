@@ -6,6 +6,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
         # exclude
+    
+    def to_representation(self,instance):
+        # print(instance)
+        # super().to_representation(instance) llama a cada uno de los valores (fields)
+        return {
+            'id' : instance['id'],
+            'nombre_usuario' : instance['username'],
+            'correo' : instance['email'],
+            'foto' : instance['image'],
+            'contrasenia' : instance['password'],
+        }
 
 
 # Serializados que no está basado en un modelo

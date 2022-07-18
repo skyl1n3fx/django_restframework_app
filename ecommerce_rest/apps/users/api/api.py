@@ -14,7 +14,8 @@ def user_api_view(request):
     # List 
     if request.method == 'GET':
         # Queryset
-        users = User.objects.all()
+        # Ajustamos la consulta para sólo obtener la data que quiero mostrar.
+        users = User.objects.all().values('id','username','email','image','password')
         users_serializer = UserSerializer(users, many = True).data
         return Response(users_serializer, status = status.HTTP_200_OK)
     # Create
