@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 # Para usar status codes
 from rest_framework import status
 
+
 @api_view(['GET','POST'])
 def user_api_view(request):
     # List 

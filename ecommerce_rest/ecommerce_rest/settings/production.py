@@ -19,3 +19,9 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Indicamos donde serviremos nuestras imágenes
+import os
+MEDIA_URL = '/archivos/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+

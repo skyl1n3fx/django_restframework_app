@@ -1,7 +1,14 @@
 from rest_framework import serializers
 from apps.users.models import User
 
+# Subir imagen
+from drf_extra_fields.fields import Base64ImageField
+
 class UserSerializer(serializers.ModelSerializer):
+    
+    # Sobreescribimos al atributo Image, para que acepte codificación base 64
+    image = Base64ImageField(required=False)
+
     class Meta:
         model = User
         fields = '__all__'
