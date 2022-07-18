@@ -42,7 +42,7 @@ def user_detail_view(request,pk = None):
             return Response(user_serializer.data, status = status.HTTP_200_OK)
         # Update 
         elif request.method == 'PUT':
-            user_serializer = TestUserSerializer(user, data = request.data, context = request.data)
+            user_serializer = UserSerializer(user, data = request.data, context = request.data)
             if user_serializer.is_valid():
                 user_serializer.save()
                 return Response(user_serializer.data, status = status.HTTP_200_OK)

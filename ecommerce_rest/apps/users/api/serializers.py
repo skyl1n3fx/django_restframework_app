@@ -45,6 +45,14 @@ class TestUserSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+
+    # Sirve si queremos validar y no guardar en una Base de datos
+    '''
+    def save(self):
+        print(self.validated_data)
+        send_email()
+    '''
+
 # Si queremos hacer validaciones especificas por campo en caso de Create or Update.
 # Podemos hacerlo en el método.
 # Podemos crear 2 serializers para uno por caso.
