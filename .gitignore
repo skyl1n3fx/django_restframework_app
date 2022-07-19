@@ -3,3 +3,6 @@
 /ecommerce_rest/ecommerce_rest/media
 /ecommerce_rest/ecommerce_rest/db.sqlite3
 /ecommerce_rest/apps/users/api/__pycache__/
+/ecommerce_rest/apps/users/migrations/__pycache__/
+/ecommerce_rest/apps/users/__pycache__/
+/ecommerce_rest/apps/users/migrations/
