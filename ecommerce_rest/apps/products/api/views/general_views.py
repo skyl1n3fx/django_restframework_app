@@ -1,25 +1,13 @@
-from rest_framework import generics
-
-from apps.products.models import MeasureUnit, Indicador, CategoryProduct
+from apps.base.api import GeneraListAPIView
 from apps.products.api.serializers.general_serializer import MeasureUnitSerializer, IndicadorSerializer, CategoryProductSerializer 
 
-class MeasureUnitListAPIView(generics.ListAPIView):
+class MeasureUnitListAPIView(GeneraListAPIView):
     serializer_class = MeasureUnitSerializer
 
-    def get_queryset(self):
-        return MeasureUnit.objects.filter(state = True)
 
-
-class IndicadorListAPIView(generics.ListAPIView):
+class IndicadorListAPIView(GeneraListAPIView):
     serializer_class = IndicadorSerializer
 
-    def get_queryset(self):
-        return Indicador.objects.filter(state = True)
-
-
-class CategoryProductListAPIView(generics.ListAPIView):
+class CategoryProductListAPIView(GeneraListAPIView):
     serializer_class = CategoryProductSerializer
-
-    def get_queryset(self):
-        return CategoryProduct.objects.filter(state = True)
 
