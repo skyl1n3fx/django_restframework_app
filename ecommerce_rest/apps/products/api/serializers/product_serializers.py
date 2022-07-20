@@ -6,14 +6,14 @@ from apps.products.api.serializers.general_serializer import MeasureUnitSerializ
 
 class ProductSerializers(serializers.ModelSerializer):
 
+    '''
     # Método 1 de mostrar relaciones en un serializer
     measure_unit = MeasureUnitSerializer()
     category = CategoryProductSerializer()
 
     # Método 2 es mostrar la clase Meta 
     measure_unit = serializers.StringRelatedField()
-    print(category)
-
+    '''
     class Meta:
         model = Product
         exclude = ('state','created_date','modified_date','deleted_date')
