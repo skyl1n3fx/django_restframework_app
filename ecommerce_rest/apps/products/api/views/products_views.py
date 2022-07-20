@@ -11,9 +11,16 @@ from apps.products.api.serializers.product_serializers import ProductSerializers
 class ProductListAPIView(GeneraListAPIView):
     serializer_class = ProductSerializers
 
-
-class ProductCreateAPIView(generics.CreateAPIView):
+# De generics ListCreate API View permite método POST y GET
+class ProductListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ProductSerializers
+    queryset = ProductSerializers.Meta.model.objects.filter(state = True)
+
+    '''
+    def get_queryset(self):
+        # Es más escalable
+
+    '''
 
     def post(self, request):
         serializer = self.serializer_class(data = request.data)
