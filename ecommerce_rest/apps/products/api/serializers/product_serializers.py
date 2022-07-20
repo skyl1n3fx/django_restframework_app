@@ -3,9 +3,13 @@ from rest_framework import serializers
 from apps.products.models import Product
 from apps.products.api.serializers.general_serializer import MeasureUnitSerializer, CategoryProductSerializer
 
+# Subir imagen
+from drf_extra_fields.fields import Base64ImageField
+
 
 class ProductSerializers(serializers.ModelSerializer):
-
+    # Sobreescribimos al atributo Image, para que acepte codificación base 64
+    image = Base64ImageField(required=False)
     '''
     # Método 1 de mostrar relaciones en un serializer
     measure_unit = MeasureUnitSerializer()
@@ -25,10 +29,10 @@ class ProductSerializers(serializers.ModelSerializer):
             'name' : instance.name,
             'description' : instance.description,
             'image' : instance.image if instance.image != '' else '',
-            'measure_unit' : instance.measure_unit.description,
+            'measure_unit' : instance.measure_unit.description if instance.measure_unit is not None else '',
             'category' : {
                 'id' : instance.category.id,
                 'description' : instance.category.description
-            }
+            } if instance.category is not None else ''
         }
         

@@ -30,16 +30,44 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
-class ProductRetrieveAPIView(generics.RetrieveAPIView):
+class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductSerializers
 
-    def get_queryset(self):
-        return self.get_serializer().Meta.model.objects.filter(state = True)
+    
+    def get_queryset(self, pk = None):
+        if pk is None:
+            return self.get_serializer().Meta.model.objects.filter(state = True)
+        else:
+            return self.get_serializer().Meta.model.objects.filter(id = pk, state = True).first()
 
     # Podemos sobreescribir el método GET
     '''
     def get(self, request,pk = None):
     '''
+
+
+    def patch(self, request,pk = None):
+        
+        if self.get_queryset(pk):
+            product_serializer = self.serializer_class(self.get_queryset(pk))
+            return Response(product_serializer.data, status = status.HTTP_200_OK)
+        return Response({'Error' :  '¡No existe un producto con estos datos!'}, status = status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request,pk = None):
+        if self.get_queryset(pk):
+            product_serializer = self.serializer_class(self.get_queryset(pk),data = request.data)
+            if product_serializer.is_valid():
+                product_serializer.save()
+                return Response({'message' : 'El producto se actualizó correctamente bb<3'}, status = status.HTTP_200_OK)
+            return Response(product_serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk = None):
+        product = self.get_queryset().filter(id = pk).first()
+        if product: 
+            product.state = False
+            product.save()
+            return Response({'message':'Producto eliminado correctamente.'}, status = status.HTTP_200_OK)
+        return Response({'Error' :  '¡No existe un producto con estos datos!'}, status = status.HTTP_400_BAD_REQUEST)
 
 
 # Eliminar 
