@@ -10,7 +10,10 @@ from apps.products.api.serializers.product_serializers import ProductSerializers
 # Para los viewset
 from rest_framework import viewsets
 
-class ProductViewSet(viewsets.ModelViewSet):
+# Habilitar autenticación
+from apps.users.authentication_mixins import Authentication
+
+class ProductViewSet(Authentication,viewsets.ModelViewSet):
     serializer_class = ProductSerializers
         
     def get_queryset(self, pk = None):

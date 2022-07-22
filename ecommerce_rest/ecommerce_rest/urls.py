@@ -12,7 +12,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi 
 
-from apps.users.views import Login, Logout
+from apps.users.views import Login, Logout, UserToken
 
 schema_view = get_schema_view(
   openapi.Info(
@@ -34,11 +34,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('logout/', Logout.as_view(),name='logout'),
     path('',Login.as_view(),name='login'),
+    path('refresh-token/',UserToken.as_view(), name = 'refresh_token'),
     path('usuario/', include('apps.users.api.urls')),
     path('products/',include('apps.products.api.urls')),
     path('productos/',include('apps.products.api.routers')),
     # Ruta de redirección por url erronéa
-    re_path(r'^(?P<path>.*)/$', admin.site.urls, name='schema-swagger-ui'),
+    re_path(r'^(?P<path>.*)/$', include('apps.products.api.routers'), name='uwu'),
 ]
 
 # Si estamos en DEBUG, los archivos se servirán en MEDIA_URL y MEDIA_ROOT
