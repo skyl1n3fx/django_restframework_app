@@ -29,6 +29,7 @@ class Login(ObtainAuthToken):
                         'message' : 'Inicio de sesión éxitoso.'
                     }, status=status.HTTP_201_CREATED)
                 else:
+                    '''
                     all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
                     if all_sessions.exists():
                         for session in all_sessions:
@@ -43,6 +44,9 @@ class Login(ObtainAuthToken):
                         'user' : user_serializer.data,
                         'message' : 'Inicio de sesión éxitoso.'
                     }, status=status.HTTP_201_CREATED)
+                '''
+                token.delete()
+                return Response({'error' : 'Ya se ha iniciado sesión con este usuario.'}, status = status.HTTP_409_CONFLICT)
             else:
                 return Response({'error' : 'Este usuario no puede iniciar sesión'}, status = status.HTTP_401_UNAUTHORIZED)
         else:
