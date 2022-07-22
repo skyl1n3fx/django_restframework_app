@@ -46,6 +46,7 @@ LOCAL_APPS = [
 ]
 
 THRID_APPS = [
+    'corsheaders', # Para habilitar la politica de cors
     'rest_framework',
     'rest_framework.authtoken', # Tokens de Autenticación
     'simple_history',
@@ -64,6 +65,7 @@ SWAGGER_SETTINGS = {
 TOKEN_EXPIRED_AFTER_SECONDS = 900
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -120,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
@@ -128,6 +130,43 @@ USE_TZ = True
 
 # Mi app funcionará con este modelo
 AUTH_USER_MODEL = 'users.User'
+
+# Configuración de Cors
+'''
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://\w+\.localhost:3000$"
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://200.104.207.205:9000"
+]
+
+'''
+
+CORS_ALLOW_HEADERS = [
+    '*'
+]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT"
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 
 
 # Static files (CSS, JavaScript, Images)
