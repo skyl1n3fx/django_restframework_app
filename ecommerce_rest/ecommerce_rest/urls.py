@@ -37,6 +37,8 @@ urlpatterns = [
     path('usuario/', include('apps.users.api.urls')),
     path('products/',include('apps.products.api.urls')),
     path('productos/',include('apps.products.api.routers')),
+    # Ruta de redirección por url erronéa
+    re_path(r'^(?P<path>.*)/$', admin.site.urls, name='schema-swagger-ui'),
 ]
 
 # Si estamos en DEBUG, los archivos se servirán en MEDIA_URL y MEDIA_ROOT
