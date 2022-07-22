@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('usuario/', include('apps.users.api.urls')),
     path('products/',include('apps.products.api.urls')),
+    path('productos/',include('apps.products.api.routers')),
 ]
 
 # Si estamos en DEBUG, los archivos se servirán en MEDIA_URL y MEDIA_ROOT
