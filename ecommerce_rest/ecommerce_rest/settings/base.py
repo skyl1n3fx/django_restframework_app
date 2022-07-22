@@ -48,11 +48,16 @@ LOCAL_APPS = [
 THRID_APPS = [
     'rest_framework',
     'simple_history',
+    'drf_yasg', # Auto documentar nuestra API
 ]
 
 # Config de mis apps
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THRID_APPS
 
+# Config de SWAGGER 
+SWAGGER_SETTINGS = {
+    'DOC_EXPANSION' : 'none'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
