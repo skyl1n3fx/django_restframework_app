@@ -47,6 +47,7 @@ LOCAL_APPS = [
 
 THRID_APPS = [
     'rest_framework',
+    'rest_framework.authtoken', # Tokens de Autenticación
     'simple_history',
     'drf_yasg', # Auto documentar nuestra API
 ]

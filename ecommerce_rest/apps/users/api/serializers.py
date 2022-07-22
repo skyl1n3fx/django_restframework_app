@@ -4,6 +4,14 @@ from apps.users.models import User
 # Subir imagen
 from drf_extra_fields.fields import Base64ImageField
 
+
+# Serializer para login 
+class UserTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'name', 'last_name')
+
+
 class UserSerializer(serializers.ModelSerializer):
     
     # Sobreescribimos al atributo Image, para que acepte codificación base 64
