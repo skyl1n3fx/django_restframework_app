@@ -51,6 +51,7 @@ THRID_APPS = [
     'rest_framework.authtoken', # Tokens de Autenticación
     'simple_history',
     'drf_yasg', # Auto documentar nuestra API
+    'naomi',
 ]
 
 # Config de mis apps
@@ -191,6 +192,10 @@ EMAIL_HOST_USER = 'jorgealequinn@gmail.com'
 
 EMAIL_HOST_PASSWORD = 'khyqfhuxehcvqsso'
 EMAIL_USE_TLS = True
+
+if DEBUG:
+    EMAIL_BACKEND = "naomi.mail.backends.naomi.NaomiBackend"
+    EMAIL_FILE_PATH = r"C:\Users\jorge\Escritorio\Curso de Django RestFramework\uwu\ecommerce_rest\tmp"
 
 
 # Indicamos donde serviremos nuestras imágenes
