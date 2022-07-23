@@ -97,3 +97,32 @@ class Logout(APIView):
         
         except:
             return Response({'error' : 'No se ha encontrado token en la petición.'}, status = status.HTTP_409_CONFLICT)
+
+
+from django.shortcuts import render
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+
+def sendEmail(email):
+    context = {'mail': "こんにちはホセ、私は私のロシアのバンカーから挨拶を送ります。" }
+    template = get_template('correo.html')
+    content = template.render(context)
+
+    correo = EmailMultiAlternatives(
+        'Este es un correo de prueba 死神',
+        'x4leqxinn',
+        settings.EMAIL_HOST_USER,
+        [email]
+        #cc=[] copia a 
+    )
+
+    correo.attach_alternative(content, 'text/html')
+    correo.send()
+
+def index(request):
+    if request.method == 'POST':
+        mail = request.POST.get('txtMail')
+        sendEmail(mail)
+
+    return render(request,'index.html',{})

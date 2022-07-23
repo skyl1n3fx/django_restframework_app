@@ -168,14 +168,33 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 
+import os
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'jorgealequinn@gmail.com'
+# Recomendación almacenarlo en variables de entorno
+# 'USER_MAIL_PASSWORD'
+
+# pip install python-decouple
+# from decouple import config
+# EMAIL_HOST_PASSWORD = config('USER_MAIL_PASSWORD')
+
+EMAIL_HOST_PASSWORD = 'khyqfhuxehcvqsso'
+EMAIL_USE_TLS = True
+
 
 # Indicamos donde serviremos nuestras imágenes
-import os
+
 MEDIA_URL = '/archivos/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
