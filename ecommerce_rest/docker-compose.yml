@@ -1,9 +1,9 @@
 version: "3"
 
 services:
-  db:
-    image: sstc/sqlite3:latest
-    env_file: .env
+  #db:
+    #image: sstc/sqlite3:latest
+    #env_file: .env
   
   web:
     build: 
@@ -14,5 +14,5 @@ services:
       - .:/code
     ports:
       - "8000:8000"
-    depends_on:
-      - db
+    #depends_on:
+    #  - db
