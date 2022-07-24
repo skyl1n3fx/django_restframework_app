@@ -7,3 +7,4 @@
 /ecommerce_rest/apps/users/__pycache__/
 /ecommerce_rest/apps/users/migrations/
 /ecommerce_rest/tmp/*.html
+/ecommerce_rest/.env
