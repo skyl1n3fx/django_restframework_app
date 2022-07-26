@@ -13,7 +13,7 @@ from rest_framework import viewsets
 # Habilitar autenticación
 from apps.users.authentication_mixins import Authentication
 
-class ProductViewSet(Authentication,viewsets.ModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializers
         
     def get_queryset(self, pk = None):
@@ -22,6 +22,8 @@ class ProductViewSet(Authentication,viewsets.ModelViewSet):
         return self.get_serializer().Meta.model.objects.filter(id = pk, state = True).first()
 
     def list(self,request):
+        for key, value in request.__dict__.items():
+            print(key)
         product_serializer = self.get_serializer(self.get_queryset(),many=True)
         return Response(product_serializer.data, status = status.HTTP_200_OK)
 

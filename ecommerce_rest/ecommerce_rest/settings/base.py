@@ -75,7 +75,13 @@ SWAGGER_SETTINGS = {
 }
 
 # El token vence cada 15 minutos.
-TOKEN_EXPIRED_AFTER_SECONDS = 900
+TOKEN_EXPIRED_AFTER_SECONDS = 80000
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'apps.users.authentication_mixins.Authentication',
+    ]
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
