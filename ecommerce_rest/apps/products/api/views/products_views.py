@@ -1,21 +1,20 @@
 from rest_framework import generics
+
 from rest_framework.response import Response
 # Para usar status codes
 from rest_framework import status
 
-
-from apps.base.api import GeneraListAPIView
 from apps.products.api.serializers.product_serializers import ProductSerializers
+from apps.base.api import GeneraListAPIView
 
 # Para los viewset
 from rest_framework import viewsets
 
-# Habilitar autenticación
-from apps.users.authentication_mixins import Authentication
+from rest_framework.permissions import IsAuthenticated
 
 class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializers
-        
+    permission_classes = (IsAuthenticated,)        
     def get_queryset(self, pk = None):
         if pk is None:
             return self.get_serializer().Meta.model.objects.filter(state = True)
