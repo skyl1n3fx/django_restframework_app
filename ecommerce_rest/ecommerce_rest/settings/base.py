@@ -60,7 +60,7 @@ LOCAL_APPS = [
 THRID_APPS = [
     'corsheaders', # Para habilitar la politica de cors
     'rest_framework',
-    'rest_framework.authtoken', # Tokens de Autenticación
+    #'rest_framework.authtoken', # Tokens de Autenticación
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'simple_history',
