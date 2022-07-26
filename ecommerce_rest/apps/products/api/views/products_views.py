@@ -10,11 +10,8 @@ from apps.base.api import GeneraListAPIView
 # Para los viewset
 from rest_framework import viewsets
 
-from rest_framework.permissions import IsAuthenticated
-
 class ProductViewSet(viewsets.ModelViewSet):
-    serializer_class = ProductSerializers
-    permission_classes = (IsAuthenticated,)        
+    serializer_class = ProductSerializers        
     def get_queryset(self, pk = None):
         if pk is None:
             return self.get_serializer().Meta.model.objects.filter(state = True)
