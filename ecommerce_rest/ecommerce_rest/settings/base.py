@@ -62,6 +62,7 @@ THRID_APPS = [
     'rest_framework',
     'rest_framework.authtoken', # Tokens de Autenticación
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'simple_history',
     'drf_yasg', # Auto documentar nuestra API
     'naomi',
@@ -187,6 +188,17 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+
+from datetime import timedelta
+
+# Permite configurar BLACK LIST y TIEMPO DE VIDA DE LOS TOKENS 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME' : timedelta(minutes=1),
+    'REFRESH_TOKEN_LIFETIME' : timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS' : True,
+    'BLACKLIST_AFTER_ROTATION' : True
+}
 
 import os
 
