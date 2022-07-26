@@ -4,13 +4,17 @@ from apps.users.models import User
 # Subir imagen
 from drf_extra_fields.fields import Base64ImageField
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-# Serializer para login 
-class UserTokenSerializer(serializers.ModelSerializer):
+# Serializador para el nuevo login
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    pass
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'name', 'last_name')
-
+        fields = ('username','email','name','last_name')
 
 class UserSerializer(serializers.ModelSerializer):
     
