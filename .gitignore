@@ -8,6 +8,7 @@
 /ecommerce_rest/apps/users/migrations/
 /ecommerce_rest/tmp/*.html
 /ecommerce_rest/.env
+*.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
