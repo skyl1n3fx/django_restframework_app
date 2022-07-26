@@ -14,6 +14,11 @@ from drf_yasg import openapi
 
 from apps.users.views import Login, Logout, UserToken
 
+from rest_framework_simplejwt.views import (
+  TokenObtainPairView,
+  TokenRefreshView,
+)
+
 schema_view = get_schema_view(
   openapi.Info(
     title="Documentación de API",
@@ -34,13 +39,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('logout/', Logout.as_view(),name='logout'),
     path('login/',Login.as_view(),name='login'),
-    path('refresh-token/',UserToken.as_view(), name = 'refresh_token'),
+    #path('refresh-token/',UserToken.as_view(), name = 'refresh_token'),
     path('usuario/', include('apps.users.api.urls')),
     path('products/',include('apps.products.api.urls')),
     path('productos/',include('apps.products.api.routers')),
+    # Implementamos las rutas de JWT.
+    path('api/token/', TokenObtainPairView.as_view(),name='token_obtain_pair_view'),
+    path('api/token/refresh/', TokenRefreshView.as_view(),name='token_refresh'),
     # Ruta de redirección por url erronéa
     re_path(r'^(?P<path>.*)/$', include('apps.products.api.routers'), name='uwu'),
 ]
+
+# Se debe realizar la consulta implementando en la petición en los HEADERS
+# Para JWT
+# Authorization :  Bearer {TOKEN}
 
 # Si estamos en DEBUG, los archivos se servirán en MEDIA_URL y MEDIA_ROOT
 # URL para acceder a las fotos
