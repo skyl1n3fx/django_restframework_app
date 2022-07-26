@@ -61,6 +61,7 @@ THRID_APPS = [
     'corsheaders', # Para habilitar la politica de cors
     'rest_framework',
     'rest_framework.authtoken', # Tokens de Autenticación
+    'rest_framework_simplejwt',
     'simple_history',
     'drf_yasg', # Auto documentar nuestra API
     'naomi',
@@ -74,12 +75,9 @@ SWAGGER_SETTINGS = {
     'DOC_EXPANSION' : 'none'
 }
 
-# El token vence cada 15 minutos.
-TOKEN_EXPIRED_AFTER_SECONDS = 80000
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
-        'apps.users.authentication_mixins.Authentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
 
