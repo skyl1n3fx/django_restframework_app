@@ -1,5 +1,4 @@
 from django.db import models
-from simple_history.models import HistoricalRecords
 
 # Importamos nuestro modelo base  
 from apps.base.models import BaseModel
@@ -9,15 +8,6 @@ from apps.base.models import BaseModel
 class MeasureUnit(BaseModel):
 
     description = models.CharField('Descripción',max_length=50, blank=False, null=False,unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = 'Unidad de Medida'
@@ -30,15 +20,6 @@ class MeasureUnit(BaseModel):
 
 class CategoryProduct(BaseModel):
     description = models.CharField('Description', max_length=50, unique=True, null = False, blank=False)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = "Categoría de Producto"
@@ -52,16 +33,6 @@ class CategoryProduct(BaseModel):
 class Indicador(BaseModel):
     descount_value = models.PositiveSmallIntegerField(default = 0)
     category_product = models.ForeignKey(CategoryProduct, on_delete=models.CASCADE, verbose_name="Indicador de Oferta")
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
-
 
     class Meta:
         verbose_name = 'Indicador de Oferta'
@@ -78,15 +49,6 @@ class Product(BaseModel):
     image = models.ImageField('Imagen del Producto', upload_to = 'products/', null = True, blank = True)
     measure_unit = models.ForeignKey(MeasureUnit, on_delete = models.CASCADE, verbose_name = 'Unidad de medida', null = True)
     category = models.ForeignKey(CategoryProduct, on_delete = models.CASCADE, verbose_name = 'Categoría de Producto', null = True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
     
     class Meta:
         verbose_name = 'Producto'
