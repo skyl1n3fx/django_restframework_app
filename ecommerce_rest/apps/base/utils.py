@@ -5,12 +5,12 @@ def validate_files(request,field,update = False):
     :request: request.data
     :field: key of file
     """
-    request._mutable = True 
+    # Hacemos una copia del request.data para poder mutarla.
+    request = request.copy()
+
     if update:
-        if type(request[field]) == str:
-            del request[field]
+        if type(request[field]) == str: request.__delitem__(field)
     else:    
-        request[field] = None if type(request[field]) == str else request[field]
+        if type(request[field]) == str: request.__setitem__(field, None)
     
-    request._mutable = False
     return request
