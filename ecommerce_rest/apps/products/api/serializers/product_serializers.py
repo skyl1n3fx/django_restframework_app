@@ -9,7 +9,7 @@ from drf_extra_fields.fields import Base64ImageField
 
 class ProductSerializers(serializers.ModelSerializer):
     # Sobreescribimos al atributo Image, para que acepte codificación base 64
-    image = Base64ImageField(required=False)
+    #image = Base64ImageField(required=False)
     '''
     # Método 1 de mostrar relaciones en un serializer
     measure_unit = MeasureUnitSerializer()
@@ -28,7 +28,7 @@ class ProductSerializers(serializers.ModelSerializer):
             'id' : instance.id,
             'name' : instance.name,
             'description' : instance.description,
-            'image' : instance.image if instance.image != '' else '',
+            'image' : instance.image.url if instance.image != '' else '',
             'measure_unit' : instance.measure_unit.description if instance.measure_unit is not None else '',
             'category' : {
                 'id' : instance.category.id,

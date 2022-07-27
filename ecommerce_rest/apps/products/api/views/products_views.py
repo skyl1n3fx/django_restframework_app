@@ -11,7 +11,10 @@ from apps.base.api import GeneraListAPIView
 from rest_framework import viewsets
 
 class ProductViewSet(viewsets.ModelViewSet):
-    serializer_class = ProductSerializers        
+    serializer_class = ProductSerializers       
+    # from rest_framework.parsers import JSONParser
+    # parser_classes = (JSONParser) 
+    # Por defecto DRF permite JSONPARSER, FORMPARSER, MULTIPARTPARSER
     def get_queryset(self, pk = None):
         if pk is None:
             return self.get_serializer().Meta.model.objects.filter(state = True)

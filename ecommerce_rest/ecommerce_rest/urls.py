@@ -58,5 +58,16 @@ urlpatterns = [
 # URL para acceder a las fotos
 # http://localhost:8000/usuario/archivos/perfil/00d71a0b-d4b3-4281-8f32-eb167dcff825.jpg
 
+'''
 if settings.DEBUG:
   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+'''
+
+
+from django.views.static import serve
+
+urlpatterns += [
+  re_path(r'media/^(?P<path>.*)$', serve, {
+    'document_root' : settings.MEDIA_ROOT
+  }),
+]
