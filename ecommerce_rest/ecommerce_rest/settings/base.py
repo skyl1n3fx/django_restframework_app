@@ -55,6 +55,7 @@ LOCAL_APPS = [
     'apps.base',
     'apps.users',
     'apps.products',
+    'apps.expense_manager'
 ]
 
 THRID_APPS = [
@@ -194,7 +195,7 @@ from datetime import timedelta
 
 # Permite configurar BLACK LIST y TIEMPO DE VIDA DE LOS TOKENS 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME' : timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME' : timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME' : timedelta(days=1),
     'ROTATE_REFRESH_TOKENS' : True,
     'BLACKLIST_AFTER_ROTATION' : True
@@ -207,9 +208,6 @@ import os
 
 
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 EMAIL_HOST = 'smtp.googlemail.com'
 EMAIL_PORT = 587
@@ -225,7 +223,10 @@ if DEBUG:
 
 # Indicamos donde serviremos nuestras imágenes
 
+
 MEDIA_URL = '/archivos/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 
