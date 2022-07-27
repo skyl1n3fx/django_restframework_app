@@ -36,3 +36,24 @@ class ProductSerializers(serializers.ModelSerializer):
             } if instance.category is not None else ''
         }
         
+    def validate_measure_unit(self, value):
+        if value == '' or value == None:
+            raise serializers.ValidationError("Debe ingresar una Unidad de Medida.")
+        return value
+
+    def validate_category(self, value):
+        if value == '' or value == None:
+            raise serializers.ValidationError("Debe ingresar una Categoria de producto.")
+        return value
+
+
+    def validate(self,data):
+        if 'measure_unit' not in data.keys():
+            raise serializers.ValidationError(
+                    {
+                        "measure_unit" : "Debe ingresar una unidad de Medida."
+                    }
+                )
+        if 'category' not in data.keys():
+            raise serializers.ValidationError({"category":"Debe ingresar una Categoria de producto."})
+        return data
