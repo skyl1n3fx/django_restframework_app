@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import viewsets
 from apps.users.models import User
-from apps.users.api.serializers import UserSerializer, TestUserSerializer, UserListSerializer, UpdateUserSerializer
+from apps.users.api.serializers import UserSerializer, TestUserSerializer, UserListSerializer, UpdateUserSerializer, PasswordSerializer
 
 from django.shortcuts import get_object_or_404
 # Con decoradores
@@ -9,6 +9,14 @@ from rest_framework.decorators import api_view
 
 # Para usar status codes
 from rest_framework import status
+
+
+'''
+    PARA LOS ACTIONS SE DEBE CONSIDERAR
+    Sólo se puede en Generic Viewset y ModelViewSet
+'''
+
+from rest_framework.decorators import action
 
 
 # Hereda del generic APIView
@@ -38,8 +46,27 @@ class UserViewSet(viewsets.GenericViewSet):
             # self.serializer_class().Meta.model.objects\
             self.queryset = self.model.objects\
                             .filter(is_active=True)\
-                            .values('id','username','email','image')
+                            .values('id','username','email','image','password')
         return self.queryset
+
+
+    # Detail obligatorio, le agrega un campo id
+    @action(detail=True, methods=['POST'], url_path='change-password')
+    def set_password(self,request,pk = None):
+        user = self.get_object(pk)
+        password_serializer = PasswordSerializer(data = request.data)
+        if password_serializer.is_valid():
+            print(password_serializer.validated_data['password'])
+            user.set_password(password_serializer.validated_data['password'])
+            user.save()
+            return Response({
+                'message': 'Contraseña actualizada correctamente.'
+            }, status = status.HTTP_200_OK)
+        return Response({
+            'message': 'Hay errores en la información enviada.',
+            'errors' : password_serializer.errors
+        }, status = status.HTTP_400_BAD_REQUEST)
+
 
     def list(self,request):
         users = self.get_queryset()
