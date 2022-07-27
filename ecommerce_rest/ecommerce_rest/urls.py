@@ -40,7 +40,7 @@ urlpatterns = [
     path('logout/', Logout.as_view(),name='logout'),
     path('login/',Login.as_view(),name='login'),
     #path('refresh-token/',UserToken.as_view(), name = 'refresh_token'),
-    path('usuario/', include('apps.users.api.urls')),
+    path('usuario/', include('apps.users.api.routers')),
     path('products/',include('apps.products.api.urls')),
     path('productos/',include('apps.products.api.routers')),
     # Implementamos las rutas de JWT.

@@ -33,18 +33,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-    
-    def update(self,instance,validated_data):
-        updated_user = super().update(instance, validated_data)
-        try:
-            # Encripta la contraseña sólo si se actualiza
-            updated_user.set_password(validated_data['password'])
-        except Exception as ex:
-            pass
-        finally:
-            updated_user.save()
-        
-        return updated_user
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('username','email', 'name', 'last_name')
+
+
+
 
 # Creamos un serializer para sólo lectura
 class UserListSerializer(serializers.ModelSerializer):
@@ -58,14 +56,13 @@ class UserListSerializer(serializers.ModelSerializer):
         model = User
 
     def to_representation(self,instance):
-        # print(instance)
+        print(instance)
         # super().to_representation(instance) llama a cada uno de los valores (fields)
         return {
             'id' : instance['id'],
             'nombre_usuario' : instance['username'],
             'correo' : instance['email'],
-            'foto' : instance['image'],
-            'contrasenia' : instance['password'],
+            'foto' : instance['image']
         }
 
 
