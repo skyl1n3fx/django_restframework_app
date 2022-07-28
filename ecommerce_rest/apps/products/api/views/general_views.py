@@ -6,6 +6,7 @@ from apps.products.models import *
 
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
 
 # ModelViewSet
 
@@ -115,3 +116,20 @@ class CategoryProductListAPIView(viewsets.GenericViewSet):
             serializer.save()
             return Response({'message' : 'Categoría eliminada correctamente!'}, status = status.HTTP_200_OK)
         return Response({'message' : 'Categoría no encontrada.'}, status = status.HTTP_400_BAD_REQUEST)
+
+from apps.products.api.filters import CategoryFilter
+
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+
+class CategoryList(generics.ListAPIView):
+    authentication_classes = ()
+    permission_classes = ()
+    serializer_class = CategoryProductSerializer
+    queryset = CategoryProduct.objects.filter(state = True)
+    # filter_bakends = (DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter,)
+    filterset_class  = CategoryFilter
+    #filterset_fields = ('description')
+    search_fields = ['description', 'id']
+    ordering_fields = ['description', 'id']
+    ordering = ['description']
