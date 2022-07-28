@@ -4,6 +4,7 @@ charset-normalizer==2.1.0
 coreapi==2.3.3
 coreschema==0.0.4
 Django==4.0.6
+django-filter==22.1
 django-admin-interface==0.19.1
 django-automatic-crud==1.2.0
 django-colorfield==0.7.2
