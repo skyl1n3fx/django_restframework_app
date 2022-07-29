@@ -11,6 +11,13 @@ from apps.expense_manager.api.serializers.general_serializers import *
 
 from rest_framework.decorators import action
 
+from apps.products.models import Product
+
+from apps.base.utils import format_date
+
+# Si queremos enviar el usuario mediante el envio del Token JWT
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 # ModelViewset me crea todos los métodos automáticos.
 # Generic viewset debo declararlos yo
 
@@ -43,3 +50,50 @@ class ExpenseViewSet(viewsets.GenericViewSet):
                 'supplier' : data_supplier
             }, status=status.HTTP_201_CREATED)
         return Response({'error':data_supplier.errors}, status = status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['GET'],detail=False)
+    def get_vouchers(self,request):
+        data = Voucher.objects.filter(state = True)
+        data = VoucherSerializer(data, many = True).data
+        return Response(data)
+
+    @action(methods=[ 'get'], detail=False)
+    def get_payment_type(self, request):
+        data = PaymentType.objects. filter(state=True).order_by('id')
+        data = PaymentTypeSerializer(data, many=True).data
+        return Response(data)
+
+    @action(methods=[ 'get'], detail=False)
+    def get_products(self, request):
+        data = Product.objects.filter(state=True).order_by('id')
+        data = ProductSerializer(data, many=True).data
+        return Response(data)
+
+    def format_data(self,data):
+        # Creamos una instancia del JWT
+        JWT_authenticator = JWTAuthentication()
+        # Decode del token
+        # Devuelve 2 cosas (Usuario y Token)
+        user, _ = JWT_authenticator.authenticate(self.request)
+        data['user'] = user.id
+        data['date'] = format_date(data['date'])
+        return data
+
+    def create(self, request):
+        try:
+            data = self.format_data(request.data)
+        except:
+            # Formato mal enviado.
+            print('Formato mal enviado.')
+            data = None
+        finally:
+            serializer = self.serializer_class(data = data)
+            
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message' : 'Factura registrada correctamente.'}, status = status.HTTP_201_CREATED)
+        return Response(
+            {
+                'message' : 'No se pudo crear la factura.',
+                'errors' : serializer.errors
+            }, status = status.HTTP_400_BAD_REQUEST)
