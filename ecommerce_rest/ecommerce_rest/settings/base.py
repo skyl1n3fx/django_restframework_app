@@ -224,12 +224,9 @@ EMAIL_USE_TLS = True
 # Permite verificar los Mails sin enviarlos a usuarios.
 if DEBUG:
     EMAIL_BACKEND = "naomi.mail.backends.naomi.NaomiBackend"
-    EMAIL_FILE_PATH = r"C:\Users\jorge\Escritorio\Curso de Django RestFramework\uwu\ecommerce_rest\tmp"
-
+    EMAIL_FILE_PATH = r"C:\Users\jorge\Escritorio\Curso de Django RestFramework\django_restframework_app\ecommerce_rest\tmp"
 
 # Indicamos donde serviremos nuestras imágenes
-
-
 MEDIA_URL = '/archivos/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (BASE_DIR, 'static')
