@@ -10,7 +10,13 @@ from apps.base.api import GeneraListAPIView
 # Para los viewset
 from rest_framework import viewsets
 
+from rest_framework.permissions import IsAuthenticatedOrReadOnly , DjangoModelPermissions
+
+
+
 class ProductViewSet(viewsets.ModelViewSet):
+    # Protegemos la vista a la API con permiso de Autenticación para 
+    permission_classes = (IsAuthenticatedOrReadOnly, )
     serializer_class = ProductSerializers       
     # from rest_framework.parsers import JSONParser
     # parser_classes = (JSONParser) 
