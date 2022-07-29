@@ -83,9 +83,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES' : (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    # Seguridad por defecto
+    #'DEFAULT_PERMISSION_CLASSES' : (
+    #    'rest_framework.permissions.IsAuthenticated',
+    #),
     #'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
     #'PAGE_SIZE' : 3,
     # Defino los filtros de la app por defecto como globales.
@@ -110,7 +111,7 @@ ROOT_URLCONF = 'ecommerce_rest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'ecommerce_rest/templates')], # Especifico la ruta donde guardaré mis templates.
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # Especifico la ruta donde guardaré mis templates.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -233,7 +234,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'eccomerce_rest/static')
+    os.path.join(BASE_DIR, 'static')
 ]
 
 
