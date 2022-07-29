@@ -44,6 +44,7 @@ urlpatterns = [
     path('usuario/', include('apps.users.api.routers')),
     path('products/',include('apps.products.api.urls')),
     path('productos/',include('apps.products.api.routers')),
+    path('expense/',include('apps.expense_manager.api.routers')),
     # Implementamos las rutas de JWT.
     path('api/token/', TokenObtainPairView.as_view(),name='token_obtain_pair_view'),
     path('api/token/refresh/', TokenRefreshView.as_view(),name='token_refresh'),
