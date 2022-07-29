@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -109,7 +110,7 @@ ROOT_URLCONF = 'ecommerce_rest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'ecommerce_rest/templates')], # Especifico la ruta donde guardaré mis templates.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -207,13 +208,11 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION' : True
 }
 
-import os
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-STATIC_URL = '/static/'
 
 EMAIL_HOST = 'smtp.googlemail.com'
 EMAIL_PORT = 587
@@ -227,10 +226,16 @@ if DEBUG:
     EMAIL_FILE_PATH = r"C:\Users\jorge\Escritorio\Curso de Django RestFramework\django_restframework_app\ecommerce_rest\tmp"
 
 # Indicamos donde serviremos nuestras imágenes
-MEDIA_URL = '/archivos/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (BASE_DIR, 'static')
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+
+STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'eccomerce_rest/static')
+]
+
 
 
 # Default primary key field type
