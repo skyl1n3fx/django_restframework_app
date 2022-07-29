@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # Función para validar envio de archivos binarios.
 def validate_files(request,field,update = False):
     """
@@ -14,3 +16,9 @@ def validate_files(request,field,update = False):
         if type(request[field]) == str: request.__setitem__(field, None)
     
     return request
+
+
+def format_date(date):
+    date = datetime.strptime(date, '%d/%m/%Y')
+    date = f"{date.year}-{date.month}-{date.day}"
+    return date
