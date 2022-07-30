@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from apps.users.models import User
 
+# Importamos los grupos
+from django.contrib.auth.models import Group
+
 # Subir imagen
 from drf_extra_fields.fields import Base64ImageField
 
@@ -32,6 +35,10 @@ class UserSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(validated_data['password'])
         user.save()
+
+        # Buscamos el Grupo de permisos y se lo asignamos al usuario.
+        group = Group.objects.get(id=1) 
+        user.groups.add(group)
         return user
 
 
