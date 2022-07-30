@@ -87,11 +87,13 @@ REST_FRAMEWORK = {
     #'DEFAULT_PERMISSION_CLASSES' : (
     #    'rest_framework.permissions.IsAuthenticated',
     #),
-    #'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
-    #'PAGE_SIZE' : 3,
+    'DEFAULT_PAGINATION_CLASS' : 'ecommerce_rest.pagination.CustomPageNumberPagination',
+    'PAGE_SIZE' : 1,
     # Defino los filtros de la app por defecto como globales.
     'DEFAULT_FILTER_BACKENDS' : ('django_filters.rest_framework.DjangoFilterBackend',
-    'rest_framework.filters.SearchFilter','rest_framework.filters.OrderingFilter')
+    'rest_framework.filters.SearchFilter','rest_framework.filters.OrderingFilter'),
+    'SEARCH_PARAM' : 'q', # Cambiamos el parametro de busqueda para para los filtros search
+    'ORDERING_PARAM': 'order',
 }
 
 MIDDLEWARE = [
