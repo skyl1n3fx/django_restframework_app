@@ -1,4 +1,5 @@
 from django.contrib import admin
-from apps.users.models import User
+from apps.users.models import User, RoleUser
 
 admin.site.register(User)
+admin.site.register(RoleUser)

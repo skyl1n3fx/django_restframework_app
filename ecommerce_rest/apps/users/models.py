@@ -3,6 +3,23 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 from simple_history.models import HistoricalRecords
 
 
+# Importamos nuestro modelo base  
+from apps.base.models import BaseModel
+
+class RoleUser(BaseModel):
+    
+    description = models.CharField('Descripción',max_length=50, blank=False, null=False,unique=True)
+
+    class Meta:
+        verbose_name = "Rol de Usuario"
+        verbose_name_plural = "Roles de Usuario"
+
+    def __str__(self):
+        return self.description
+
+    
+
+
 class UserManager(BaseUserManager):
     def _create_user(self, username, email, name,last_name, password, is_staff, is_superuser, **extra_fields):
         user = self.model(
@@ -32,8 +49,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     image = models.ImageField('Imagen de perfil', upload_to='perfil/', default='', max_length=255, null=True, blank = True) # Modelo con campo Image
     is_active = models.BooleanField(default = True)
     is_staff = models.BooleanField(default = False)
+    role = models.ForeignKey(RoleUser, on_delete = models.CASCADE, verbose_name = 'Rol Usuario', null = True)
     historical = HistoricalRecords()
     objects = UserManager()
+
 
     class Meta:
         verbose_name = 'Usuario'
