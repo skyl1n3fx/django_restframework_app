@@ -6,6 +6,8 @@ from rest_framework import status
 
 from rest_framework.views import APIView
 
+from datetime import datetime
+
 # Create your views here.
 
 from django.shortcuts import render
@@ -66,6 +68,13 @@ class Login(TokenObtainPairView):
             login_serializer = self.serializer_class(data=request.data)
             if login_serializer.is_valid():
                 user_serializer = CustomUserSerializer(user)
+                # Capturamos todas las sesiones abiertas del usuario y las cerramos.
+                all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
+                if all_sessions.exists():
+                    for session in all_sessions:
+                        session_data = session.get_decoded()
+                        if user.id == int(session_data.get('_auth_user_id')):
+                            session.delete()
                 return Response(
                     {
                         'token' : login_serializer.validated_data.get('access'),
@@ -82,6 +91,14 @@ class Logout(GenericAPIView):
         user = User.objects.filter(id = request.data.get('user',0))
         if user.exists():
             RefreshToken.for_user(user.first())
+            # Capturamos todas las sesiones abiertas del usuario y las cerramos.
+            all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
+            if all_sessions.exists():
+                for session in all_sessions:
+                    session_data = session.get_decoded()
+                    if user.id == int(session_data.get('_auth_user_id')):
+                        session.delete()
             return Response({'message' : 'Sesión cerrada correctamente.'}, status=status.HTTP_200_OK)
         return Response({'error' : 'No existe este usuario.'})
+
 
